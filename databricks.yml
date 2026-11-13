@@ -1,0 +1,30 @@
+# Databricks Asset Bundle - filled in during Phase 3.
+# Deploy with: databricks bundle deploy -t dev
+bundle:
+  name: clinical-supply-lakehouse
+
+include:
+  - resources/*.yml
+
+variables:
+  env:
+    description: Environment suffix for the Unity Catalog catalog
+    default: dev
+
+targets:
+  dev:
+    mode: development
+    default: true
+    variables:
+      env: dev
+    # workspace:
+    #   host: https://adb-<workspace-id>.<n>.azuredatabricks.net
+
+  prod:
+    mode: production
+    variables:
+      env: prod
+    # workspace:
+    #   host: https://adb-<workspace-id>.<n>.azuredatabricks.net
+    # run_as:
+    #   service_principal_name: <deployment-service-principal>

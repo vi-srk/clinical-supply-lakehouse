@@ -1,0 +1,43 @@
+# Data contract for the Gold shipment fact table.
+# Validated in CI by scripts/validate_contracts.py; enforced at runtime by dbt model contracts (Phase 4).
+contract_version: 1.0.0
+table: clinical_supply_prod.gold.fact_shipment
+description: One row per drug-kit shipment to a trial site, with cold-chain status.
+owner: data-engineering@clinical-supply.example
+steward: supply-operations@clinical-supply.example
+domain: clinical_supply
+classification: internal
+sla:
+  freshness_hours: 24
+  availability: "99.5%"
+schema:
+  - name: shipment_id
+    type: string
+    nullable: false
+    primary_key: true
+    description: Business key of the shipment.
+  - name: site_key
+    type: bigint
+    nullable: false
+    description: Foreign key to gold.dim_site.
+  - name: shipped_date
+    type: date
+    nullable: false
+  - name: delivered_date
+    type: date
+    nullable: true
+    description: Null until the shipment is delivered.
+  - name: kit_quantity
+    type: int
+    nullable: false
+  - name: is_temperature_excursion
+    type: boolean
+    nullable: false
+    description: True when the shipment left the 2-8 C cold-chain range.
+quality:
+  - rule: kit_quantity > 0
+  - rule: delivered_date IS NULL OR delivered_date >= shipped_date
+  - rule: shipment_id IS UNIQUE
+consumers:
+  - Supply risk dashboard (Power BI)
+  - Weekly site-resupply forecast
