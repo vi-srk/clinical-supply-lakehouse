@@ -68,18 +68,19 @@ Two planes run underneath every stage:
 
 ## Quick start
 
+This project uses [uv](https://docs.astral.sh/uv/) for Python, dependencies and the lock file.
+
 ```bash
-# 1. Set up a virtual environment
-python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
+# 1. Install Python 3.11 and all dependencies (creates .venv from uv.lock)
+uv sync
 
 # 2. Generate synthetic data locally
-python -m data_generator.generate --patients 1000 --out data/raw
+uv run python -m data_generator.generate --patients 1000 --out data/raw
 
 # 3. Run tests and checks
-ruff check .
-pytest
-python scripts/validate_contracts.py
+uv run ruff check .
+uv run pytest
+uv run python scripts/validate_contracts.py
 ```
 
 ## Roadmap
