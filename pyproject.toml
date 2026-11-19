@@ -14,11 +14,15 @@ dependencies = [
     "pyyaml>=6.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
+# Installed automatically by `uv sync`
 dev = [
     "pytest>=8.0",
     "ruff>=0.5",
 ]
+
+[project.optional-dependencies]
+# Install with: uv sync --extra spark  (needed from Phase 2)
 spark = [
     "pyspark>=3.5",
     "delta-spark>=3.2",
