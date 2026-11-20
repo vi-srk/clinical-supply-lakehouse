@@ -19,6 +19,29 @@ A clinical-trial sponsor ships investigational drug kits to trial sites around t
 
 The data is sensitive: patient records are PII/PHI, so every table needs an owner, classification, access rules and an audit trail. **This project shows how to build that platform so it is reliable, observable and governed by design — not as an afterthought.**
 
+## The project in plain English
+
+**The story.** A drug company runs clinical trials, testing new medicines on patients at hospitals around the world (**sites**). It ships **drug kits** to these sites, and the kits must stay cold (2–8 °C). Patients sometimes have bad reactions (**adverse events**). The company needs to know:
+
+- Which sites are about to run out of kits?
+- Which shipments got too warm?
+- Which drugs are causing bad reactions?
+
+**What this project builds** is a system that collects this data, cleans it and turns it into reliable answers. Think of it like a water treatment plant:
+
+1. **Sources (the river):** raw data arrives: sites, patients, shipments, adverse events.
+2. **Bronze (the storage tank):** the raw data is stored exactly as it arrived.
+3. **Silver (the filter):** the data is cleaned: duplicates removed, formats fixed, bad records set aside.
+4. **Gold (the drinking water):** clean, ready-to-use tables for reporting.
+5. **Consume (the tap):** dashboards and AI tools read from Gold.
+
+**Why governance matters.** Patient data is private, so the platform makes sure that:
+
+- every table has an **owner**
+- private columns (names, emails) are **tagged and hidden** from people who shouldn't see them
+- you can see **where each number came from** (lineage)
+- you can see **who looked at what** (audit)
+
 ## Architecture
 
 ```mermaid
